@@ -1,0 +1,34 @@
+version: "3.8"
+
+services:
+  api:
+    build: .
+    ports:
+      - "8000:8000"
+    # Load environment variables from .env file in the current directory
+    # Ensure your .env file is present and correctly configured for Supabase and DATABASE_URL
+    env_file:
+      - .env
+    volumes:
+      # For development, you might want to mount your code for live reloading
+      # But for a production-like image, the code is copied in via Dockerfile ADD/COPY
+      # If you enable this, ensure your CMD in Dockerfile or here supports reload (e.g. uvicorn --reload)
+      # - ./app:/app/app
+    depends_on:
+      # Add database service here if you were running PostgreSQL locally via Docker Compose
+      # For Supabase (cloud), no direct DB dependency in compose, app connects over network.
+      # db:
+      #   image: postgres:13
+      #   volumes:
+      #     - postgres_data:/var/lib/postgresql/data/
+      #   environment:
+      #     - POSTGRES_USER=youruser
+      #     - POSTGRES_PASSWORD=yourpassword
+      #     - POSTGRES_DB=yourdb
+      #   ports:
+      #     - "5432:5432"
+    command: uvicorn app.main:app --host 0.0.0.0 --port 8000
+
+# Optional: Define a named volume for database persistence if using a local DB service
+# volumes:
+#   postgres_data:
