@@ -1,0 +1,12 @@
+fastapi[all]
+uvicorn[standard]
+sqlalchemy
+pydantic
+python-jose[cryptography]
+passlib[bcrypt]
+supabase
+psycopg2-binary
+apscheduler
+python-dotenv
+pytest
+httpx
